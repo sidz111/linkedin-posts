@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>LinkedIn Posts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .post {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h2>LinkedIn Posts</h2>
+    <div th:each="post : ${posts}" class="post">
+        <p><strong>Text:</strong> <span th:text="${post.text}"></span></p>
+        <p><strong>Reactions:</strong> <span th:text="${post.totalReactionCount}"></span></p>
+        <p><strong>Posted Date:</strong> <span th:text="${post.postedDate}"></span></p>
+        <p><strong>URL:</strong> <a th:href="${post.postUrl}" target="_blank">View Post</a></p>
+    </div>
+</body>
+</html>
