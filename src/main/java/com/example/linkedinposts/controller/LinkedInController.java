@@ -17,11 +17,17 @@ public class LinkedInController {
     public LinkedInController(LinkedInService linkedInService) {
         this.linkedInService = linkedInService;
     }
+    
+    @GetMapping("/")
+    public String homePage() {
+    	return "index";
+    }
 
     @GetMapping("/posts")
     public String fetchPosts(@RequestParam String username, Model model) {
         Mono<Map> postsData = linkedInService.fetchPosts(username);
-        model.addAttribute("posts", postsData.block().get("data")); // Blocking call to retrieve API data
+        model.addAttribute("posts", postsData.block().get("data"));
+        model.addAttribute("username", username);
         return "posts";
     }
 }

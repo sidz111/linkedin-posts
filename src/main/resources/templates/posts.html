@@ -2,24 +2,155 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>LinkedIn Posts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
+        /* Global Styles */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
+            background: black;
+            margin: 0;
+            padding: 40px 20px;
+            min-height: 100vh;
         }
+        h3 {
+        color: #00a0dc;
+        }
+
+        h2 {
+            color: #1a1a1a;
+            font-size: 2.5rem;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            background: linear-gradient(45deg, #0077b5, #00a0dc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Post Card */
         .post {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            padding: 25px;
+            margin-bottom: 25px;
+            text-align: left;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 4px solid #0077b5;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .post::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 119, 181, 0.1), transparent);
+            transition: 0.5s;
+        }
+
+        .post:hover::before {
+            left: 100%;
+        }
+
+        .post p {
+            margin: 15px 0;
+            font-size: 1rem;
+            color: #4a4a4a;
+            line-height: 1.6;
+        }
+
+        .post strong {
+            color: #2d3436;
+            font-weight: 600;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .post a {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #0077b5, #00a0dc);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .post a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 119, 181, 0.3);
+        }
+
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .post {
+                padding: 20px;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Decorative Elements */
+        .header-decor {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header-decor::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #0077b5, #00a0dc);
+            margin: 15px auto;
+            border-radius: 2px;
         }
     </style>
 </head>
 <body>
-    <h2>LinkedIn Posts</h2>
-    <div th:each="post : ${posts}" class="post">
-        <p><strong>Text:</strong> <span th:text="${post.text}"></span></p>
-        <p><strong>Reactions:</strong> <span th:text="${post.totalReactionCount}"></span></p>
-        <p><strong>Posted Date:</strong> <span th:text="${post.postedDate}"></span></p>
-        <p><strong>URL:</strong> <a th:href="${post.postUrl}" target="_blank">View Post</a></p>
+    <div class="header-decor">
+        <h2>🚀 Latest LinkedIn Posts of</h2>
+        <h3 th:text="${username}"></h3>
+    </div>
+    <div class="container">
+        <div th:each="post : ${posts}" class="post">
+            <p><span class="emoji">📝</span><strong>Text:</strong> <span th:text="${post.text}"></span></p>
+            <p><span class="emoji">❤️</span><strong>Reactions:</strong> <span th:text="${post.totalReactionCount}"></span></p>
+            <p><span class="emoji">📅</span><strong>Posted Date:</strong> <span th:text="${post.postedDate}"></span></p>
+            <p><span class="emoji">🔗</span><strong>URL:</strong> <a th:href="${post.postUrl}" target="_blank">View Post →</a></p>
+        </div>
     </div>
 </body>
 </html>
